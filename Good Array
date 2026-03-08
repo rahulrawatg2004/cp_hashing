@@ -1,0 +1,45 @@
+https://codeforces.com/problemset/problem/1077/C
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        int arr[] = new int[n];
+        long sum = 0;
+
+        HashMap<Integer,Integer> h = new HashMap<>();
+
+        for(int i=0;i<n;i++){
+            arr[i] = sc.nextInt();
+            sum += arr[i];
+            h.put(arr[i], h.getOrDefault(arr[i],0)+1);
+        }
+
+        ArrayList<Integer> ans = new ArrayList<>();
+
+        for(int i=0;i<n;i++){
+
+            long remaining = sum - arr[i];
+
+            if(remaining % 2 != 0) continue;
+
+            long target = remaining / 2;
+
+            h.put(arr[i], h.get(arr[i]) - 1);
+
+            if(target <= Integer.MAX_VALUE && target >= Integer.MIN_VALUE
+                    && h.getOrDefault((int)target,0) > 0){
+                ans.add(i+1);
+            }
+
+            h.put(arr[i], h.get(arr[i]) + 1);
+        }
+
+        System.out.println(ans.size());
+        for(int x : ans) System.out.print(x+" ");
+    }
+}

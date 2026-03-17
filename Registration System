@@ -1,0 +1,35 @@
+https://codeforces.com/problemset/problem/4/C
+
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for (int i = 0; i < n; i++) {
+            String s = sc.next();
+
+            if (!map.containsKey(s)) {
+                map.put(s, 1);
+                System.out.println("OK");
+            } else {
+                int count = map.get(s);
+                String newStr = s + count;
+
+                // move forward from last known count
+                while (map.containsKey(newStr)) {
+                    count++;
+                    newStr = s + count;
+                }
+
+                System.out.println(newStr);
+
+                map.put(s, count + 1); // next time start from here
+                map.put(newStr, 1);    // mark new string as used
+            }
+        }
+    }
+}
